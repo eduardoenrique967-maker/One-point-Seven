@@ -1,0 +1,1033 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Felices 1 Año y 7 Meses | Nuestra Historia</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Playfair+Display:ital,wght@0,500;0,700;1,400&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-cream: #fdf8f5;
+            --rose-soft: #f4dce0;
+            --rose-deep: #be4d66;
+            --gold-warm: #d4a359;
+            --leaf-green: #3b7a57;
+            --wood-dark: #5c3a21;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-cream);
+            color: #4a3531;
+            overflow-x: hidden;
+        }
+
+        .font-romantic {
+            font-family: 'Dancing Script', cursive;
+        }
+
+        .font-serif-elegant {
+            font-family: 'Playfair Display', serif;
+        }
+
+        /* ==========================================
+           ANIMACIONES DEL ÁRBOL Y RECUERDOS
+        ========================================== */
+        .tree-path {
+            stroke-dasharray: 1200;
+            stroke-dashoffset: 1200;
+            transition: stroke-dashoffset 2.4s cubic-bezier(0.35, 0, 0.25, 1);
+        }
+
+        .tree-grown .tree-path {
+            stroke-dashoffset: 0;
+        }
+
+        .foliage-cluster {
+            transform: scale(0);
+            transform-origin: center;
+            opacity: 0;
+            transition: transform 0.9s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.8s ease;
+        }
+
+        .tree-grown .foliage-cluster {
+            transform: scale(1);
+            opacity: 0.95;
+        }
+
+        /* Balanceo tipo péndulo para las fotos colgantes */
+        @keyframes gentleSwing {
+            0%, 100% { transform: rotate(-4deg); }
+            50% { transform: rotate(4deg); }
+        }
+
+        .hanging-charm-wrapper {
+            transform-origin: top center;
+            opacity: 0;
+            pointer-events: none;
+            transform: translateY(-15px) scale(0.5);
+            transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .tree-grown .hanging-charm-wrapper {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translateY(0) scale(1);
+        }
+
+        .charm-swing {
+            transform-origin: top center;
+            animation: gentleSwing 3.8s ease-in-out infinite;
+        }
+
+        .charm-swing:hover {
+            animation-play-state: paused;
+        }
+
+        /* ==========================================
+           ANIMACIONES DEL COFRE Y CARTA
+        ========================================== */
+        @keyframes chestShake {
+            0%, 100% { transform: translateX(0) rotate(0deg); }
+            20% { transform: translateX(-6px) rotate(-2deg); }
+            40% { transform: translateX(6px) rotate(2deg); }
+            60% { transform: translateX(-4px) rotate(-1.5deg); }
+            80% { transform: translateX(4px) rotate(1.5deg); }
+        }
+
+        .chest-shaking {
+            animation: chestShake 0.6s ease-in-out;
+        }
+
+        #chest-lid {
+            transform-origin: 200px 145px;
+            transition: transform 0.9s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .chest-open #chest-lid {
+            transform: translateY(-28px) rotate(-16deg);
+        }
+
+        #chest-glow {
+            opacity: 0;
+            transition: opacity 0.8s ease;
+        }
+
+        .chest-open #chest-glow {
+            opacity: 1;
+        }
+
+        /* Pergamino de la carta */
+        .parchment-card {
+            background: 
+                radial-gradient(circle at top left, rgba(255,240,243,0.7), transparent 60%),
+                radial-gradient(circle at bottom right, rgba(254,243,199,0.6), transparent 60%),
+                #fffdf9;
+            box-shadow: 
+                0 25px 60px -15px rgba(92, 58, 33, 0.25),
+                0 0 0 1px rgba(212, 163, 89, 0.35),
+                inset 0 0 40px rgba(212, 163, 89, 0.12);
+        }
+
+        /* Partículas flotantes al abrir el cofre */
+        @keyframes floatBurst {
+            0% {
+                transform: translate(0, 0) scale(0.3) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(var(--tx), var(--ty)) scale(1.2) rotate(var(--rot));
+                opacity: 0;
+            }
+        }
+
+        .burst-particle {
+            position: absolute;
+            pointer-events: none;
+            animation: floatBurst 1.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        /* ==========================================
+           PÉTALOS DE FONDO
+        ========================================== */
+        @keyframes floatingPetal {
+            0% {
+                transform: translateY(105vh) translateX(0) rotate(0deg);
+                opacity: 0;
+            }
+            15% { opacity: 0.55; }
+            85% { opacity: 0.55; }
+            100% {
+                transform: translateY(-10vh) translateX(60px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .bg-petal {
+            position: fixed;
+            pointer-events: none;
+            z-index: 1;
+            animation: floatingPetal linear infinite;
+        }
+    </style>
+</head>
+<body class="relative min-h-screen selection:bg-rose-200 selection:text-rose-900">
+
+    <!-- Contenedor de pétalos y destellos flotantes de fondo -->
+    <div id="ambient-particles" class="fixed inset-0 pointer-events-none z-0 overflow-hidden"></div>
+
+    <!-- ==========================================
+         BARRA DE NAVEGACIÓN FLOTANTE
+    =========================================== -->
+    <header class="fixed top-4 left-0 right-0 z-40 px-4 flex justify-center">
+        <nav class="bg-white/85 backdrop-blur-md border border-rose-200/70 shadow-lg shadow-rose-900/5 rounded-full px-5 py-2.5 flex items-center gap-3 sm:gap-6 text-xs sm:text-sm font-medium text-stone-700">
+            <a href="#inicio" class="hover:text-rose-600 transition-colors flex items-center gap-1.5">
+                <span class="text-rose-500">♥</span>
+                <span id="nav-couple-names" class="font-serif-elegant font-bold text-stone-800">Tu y yo</span>
+            </a>
+            <span class="text-rose-200">|</span>
+            <a href="#seccion-arbol" class="hover:text-rose-600 transition-colors flex items-center gap-1">
+                <span>🌳</span> <span>El Árbol del amor</span>
+            </a>
+            <span class="text-rose-200">|</span>
+            <a href="#seccion-cofre" class="hover:text-rose-600 transition-colors flex items-center gap-1">
+                <span>✨</span> <span>El Cofre</span>
+            </a>
+        </nav>
+    </header>
+
+    <!-- ==========================================
+         HERO / PORTADA DE ANIVERSARIO
+    =========================================== -->
+    <section id="inicio" class="relative z-10 min-h-screen flex flex-col justify-center items-center text-center px-4 pt-24 pb-16 bg-gradient-to-b from-rose-100/50 via-[#fdf8f5] to-[#fdf8f5]">
+        <div class="max-w-3xl mx-auto">
+            <!-- Insignia superior -->
+            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-rose-100/90 border border-rose-200 text-rose-700 text-xs sm:text-sm font-medium mb-6 shadow-sm">
+                <span>✨</span>
+                <span id="hero-badge">Celebrando 19 meses de amor</span>
+                <span>✨</span>
+            </div>
+
+            <!-- Título Principal -->
+            <h1 class="font-serif-elegant text-4xl sm:text-6xl md:text-7xl font-bold text-stone-800 tracking-tight leading-tight mb-4">
+                Felices <span class="text-rose-600 italic font-normal">1 Año y 7 Meses</span>
+            </h1>
+
+            <!-- Nombres de la pareja -->
+            <p id="hero-couple-names" class="font-romantic text-3xl sm:text-4xl text-amber-700 mb-6">
+                Majo & Lalo
+            </p>
+
+            <p id="hero-subtitle" class="text-stone-600 text-base sm:text-lg max-w-xl mx-auto leading-relaxed mb-10 font-light">
+                Cada día a tu lado es una nueva rama en nuestra historia y un tesoro que guardo en el corazón. Preparé este rincón especial para recordar lo bonito que es amarte.
+            </p>
+
+            <!-- Estadísticas románticas de 1 año y 7 meses -->
+            <div class="grid grid-cols-3 gap-3 sm:gap-6 max-w-lg mx-auto mb-12">
+                <div class="bg-white/80 backdrop-blur-sm border border-rose-100 rounded-2xl p-3 sm:p-4 shadow-sm">
+                    <span class="block font-serif-elegant text-2xl sm:text-3xl font-bold text-rose-600">19</span>
+                    <span class="text-[11px] sm:text-xs text-stone-500 uppercase tracking-wider">Meses Juntos</span>
+                </div>
+                <div class="bg-white/80 backdrop-blur-sm border border-rose-100 rounded-2xl p-3 sm:p-4 shadow-sm">
+                    <span class="block font-serif-elegant text-2xl sm:text-3xl font-bold text-amber-600">~578</span>
+                    <span class="text-[11px] sm:text-xs text-stone-500 uppercase tracking-wider">Días de Risas</span>
+                </div>
+                <div class="bg-white/80 backdrop-blur-sm border border-rose-100 rounded-2xl p-3 sm:p-4 shadow-sm">
+                    <span class="block font-serif-elegant text-2xl sm:text-3xl font-bold text-emerald-700">∞</span>
+                    <span class="text-[11px] sm:text-xs text-stone-500 uppercase tracking-wider">Por Vivir</span>
+                </div>
+            </div>
+
+            <!-- Botones de acción -->
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                <a href="#seccion-arbol" class="w-full sm:w-auto px-8 py-4 rounded-full bg-gradient-to-r from-rose-500 to-rose-600 text-white font-medium shadow-lg shadow-rose-500/25 hover:shadow-rose-500/40 hover:-translate-y-0.5 transition-all flex items-center justify-center gap-2">
+                    <span>Ver Nuestro Árbol de Recuerdos</span>
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
+                </a>
+                <a href="#seccion-cofre" class="w-full sm:w-auto px-8 py-4 rounded-full bg-white text-stone-700 border border-amber-300/80 font-medium shadow-sm hover:bg-amber-50/50 transition-all flex items-center justify-center gap-2">
+                    <span>Ir al Cofre del Amor</span>
+                    <span>🗝️</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================
+         SECCIÓN 1: EL ÁRBOL DE NUESTROS RECUERDOS
+    =========================================== -->
+    <section id="seccion-arbol" class="relative z-10 py-20 px-4 bg-gradient-to-b from-[#fdf8f5] via-emerald-50/30 to-[#fdf8f5]">
+        <div class="max-w-5xl mx-auto">
+            <!-- Encabezado de Sección -->
+            <div class="text-center max-w-2xl mx-auto mb-8">
+                <span class="text-xs font-semibold uppercase tracking-widest text-emerald-700 bg-emerald-100/80 px-3 py-1 rounded-full">Sección I • Raíces Fuertes</span>
+                <h2 class="font-serif-elegant text-3xl sm:text-5xl font-bold text-stone-800 mt-3 mb-3">
+                    El Árbol de Nuestros Recuerdos
+                </h2>
+                <p class="text-stone-600 text-sm sm:text-base">
+                    Así como un árbol crece firme con el tiempo, nuestro amor ha florecido durante este <strong>1 año y 7 meses</strong>. Haz crecer nuestro árbol y toca cada recuerdo colgante para leer su mensaje.
+                </p>
+            </div>
+
+            <!-- Controles del Árbol -->
+            <div class="flex flex-wrap items-center justify-center gap-3 mb-6">
+                <button id="btn-grow-tree" onclick="growTree()" class="px-6 py-3 rounded-full bg-gradient-to-r from-emerald-600 to-teal-700 text-white font-medium text-sm sm:text-base shadow-md shadow-emerald-900/15 hover:shadow-lg hover:scale-105 active:scale-95 transition-all flex items-center gap-2">
+                    <span>🌱</span>
+                    <span id="btn-grow-text">Hacer Crecer Nuestro Árbol</span>
+                </button>
+                <button id="btn-replay-tree" onclick="resetAndGrowTree()" class="hidden px-4 py-2.5 rounded-full bg-white border border-stone-200 text-stone-600 text-xs sm:text-sm font-medium hover:bg-stone-50 transition-all flex items-center gap-1.5 shadow-sm">
+                    <span>🔄</span>
+                    <span>Repetir animación</span>
+                </button>
+            </div>
+
+            <!-- Estado / Instrucción dinámica -->
+            <p id="tree-status-hint" class="text-center text-xs sm:text-sm text-rose-600 font-medium mb-4 opacity-90 transition-opacity">
+                ✨ Toca cualquiera de las 7 manzanas fotográficas para abrir el recuerdo ✨
+            </p>
+
+            <!-- Escenario Interactivo del Árbol -->
+            <div class="relative w-full max-w-[680px] mx-auto aspect-[7/6] bg-gradient-to-b from-sky-50/60 via-rose-50/30 to-emerald-100/50 rounded-3xl border border-stone-200/80 shadow-xl overflow-hidden select-none">
+                
+                <!-- Sol / Halo romántico de fondo -->
+                <div class="absolute top-8 left-1/2 -translate-x-1/2 w-64 h-64 sm:w-80 sm:h-80 bg-amber-100/50 rounded-full blur-3xl pointer-events-none"></div>
+
+                <!-- Contenedor principal del SVG + Fotos Colgantes -->
+                <div id="tree-stage" class="relative w-full h-full">
+                    
+                    <!-- SVG del Árbol (Tronco, Ramas y Copa) -->
+                    <svg viewBox="0 0 700 600" class="w-full h-full block">
+                        <defs>
+                            <!-- Gradiente del tronco -->
+                            <linearGradient id="trunkGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <stop offset="0%" stop-color="#4a2c18" />
+                                <stop offset="50%" stop-color="#6e472b" />
+                                <stop offset="100%" stop-color="#3d2312" />
+                            </linearGradient>
+                            <!-- Gradientes del follaje -->
+                            <radialGradient id="leafGradDark" cx="50%" cy="50%" r="50%">
+                                <stop offset="0%" stop-color="#2d6a4f" />
+                                <stop offset="100%" stop-color="#1b4332" />
+                            </radialGradient>
+                            <radialGradient id="leafGradMid" cx="40%" cy="40%" r="60%">
+                                <stop offset="0%" stop-color="#52b788" />
+                                <stop offset="100%" stop-color="#2d6a4f" />
+                            </radialGradient>
+                            <radialGradient id="leafGradLight" cx="35%" cy="35%" r="65%">
+                                <stop offset="0%" stop-color="#74c69d" />
+                                <stop offset="100%" stop-color="#40916c" />
+                            </radialGradient>
+                        </defs>
+
+                        <!-- Colina de pasto en la base -->
+                        <path d="M 0 560 Q 350 515 700 560 L 700 600 L 0 600 Z" fill="#a3b18a" opacity="0.45" />
+                        <path d="M 60 565 Q 350 530 640 565 L 640 600 L 60 600 Z" fill="#588157" opacity="0.55" />
+
+                        <!-- Follaje de fondo (Sombra) -->
+                        <g class="foliage-cluster" style="transition-delay: 1.0s;">
+                            <circle cx="220" cy="230" r="85" fill="url(#leafGradDark)" />
+                            <circle cx="480" cy="230" r="85" fill="url(#leafGradDark)" />
+                            <circle cx="350" cy="145" r="105" fill="url(#leafGradDark)" />
+                            <circle cx="155" cy="295" r="70" fill="url(#leafGradDark)" />
+                            <circle cx="545" cy="295" r="70" fill="url(#leafGradDark)" />
+                        </g>
+
+                        <!-- Follaje medio -->
+                        <g class="foliage-cluster" style="transition-delay: 1.25s;">
+                            <circle cx="265" cy="185" r="90" fill="url(#leafGradMid)" />
+                            <circle cx="435" cy="185" r="90" fill="url(#leafGradMid)" />
+                            <circle cx="190" cy="270" r="82" fill="url(#leafGradMid)" />
+                            <circle cx="510" cy="270" r="82" fill="url(#leafGradMid)" />
+                            <circle cx="350" cy="240" r="98" fill="url(#leafGradMid)" />
+                        </g>
+
+                        <!-- Tronco y ramas principales animadas -->
+                        <g stroke="url(#trunkGrad)" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <!-- Tronco central y raíces -->
+                            <path class="tree-path" stroke-width="34" d="M 350 555 C 350 470, 355 410, 350 340" />
+                            <path class="tree-path" stroke-width="20" d="M 325 558 Q 345 530 350 490" />
+                            <path class="tree-path" stroke-width="20" d="M 375 558 Q 355 530 350 490" />
+
+                            <!-- Ramas Izquierdas -->
+                            <path class="tree-path" stroke-width="22" d="M 350 370 C 310 330, 245 300, 175 280" />
+                            <path class="tree-path" stroke-width="14" d="M 255 315 C 225 265, 200 225, 195 190" />
+                            <path class="tree-path" stroke-width="16" d="M 350 345 C 320 275, 290 220, 265 170" />
+
+                            <!-- Rama Central Superior -->
+                            <path class="tree-path" stroke-width="18" d="M 350 350 C 350 270, 355 200, 350 130" />
+
+                            <!-- Ramas Derechas -->
+                            <path class="tree-path" stroke-width="22" d="M 350 370 C 390 330, 455 300, 525 280" />
+                            <path class="tree-path" stroke-width="14" d="M 445 315 C 475 265, 500 225, 505 190" />
+                            <path class="tree-path" stroke-width="16" d="M 350 345 C 380 275, 410 220, 435 170" />
+                        </g>
+
+                        <!-- Corazón grabado en el tronco -->
+                        <g class="foliage-cluster" style="transition-delay: 1.8s;">
+                            <path d="M350 445 C350 442, 343 437, 339 442 C335 447, 340 454, 350 462 C360 454, 365 447, 361 442 C357 437, 350 442, 350 445 Z" fill="#e29578" opacity="0.85"/>
+                        </g>
+
+                        <!-- Follaje frontal iluminado y flores del árbol -->
+                        <g class="foliage-cluster" style="transition-delay: 1.5s;">
+                            <circle cx="350" cy="135" r="78" fill="url(#leafGradLight)" />
+                            <circle cx="240" cy="220" r="68" fill="url(#leafGradLight)" />
+                            <circle cx="460" cy="220" r="68" fill="url(#leafGradLight)" />
+                            <circle cx="310" cy="260" r="65" fill="url(#leafGradLight)" />
+                            <circle cx="395" cy="260" r="65" fill="url(#leafGradLight)" />
+                            <circle cx="165" cy="300" r="55" fill="url(#leafGradLight)" />
+                            <circle cx="535" cy="300" r="55" fill="url(#leafGradLight)" />
+
+                            <!-- Pequeñas flores rosadas decorativas en la copa -->
+                            <circle cx="290" cy="120" r="6" fill="#fda4af" />
+                            <circle cx="410" cy="115" r="5" fill="#fda4af" />
+                            <circle cx="160" cy="245" r="6" fill="#fecdd3" />
+                            <circle cx="540" cy="240" r="6" fill="#fda4af" />
+                            <circle cx="350" cy="200" r="5" fill="#fecdd3" />
+                            <circle cx="235" cy="290" r="5" fill="#fda4af" />
+                            <circle cx="475" cy="295" r="5" fill="#fecdd3" />
+                        </g>
+                    </svg>
+
+                    <!-- Contenedor donde JS inyecta las fotos colgantes (Manzanas/Polaroids) -->
+                    <div id="hanging-photos-container" class="absolute inset-0 pointer-events-none"></div>
+                </div>
+
+                <!-- Etiqueta decorativa al pie del árbol -->
+                <div class="absolute bottom-3 left-1/2 -translate-x-1/2 bg-white/90 backdrop-blur-md px-4 py-1.5 rounded-full border border-amber-200 shadow-sm text-xs text-stone-700 font-medium flex items-center gap-2">
+                    <span class="text-rose-500">🍎</span>
+                    <span>7 Recuerdos Colgantes • Haz clic en cada uno</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================
+         SECCIÓN 2: EL COFRE DE NUESTRO AMOR
+    =========================================== -->
+    <section id="seccion-cofre" class="relative z-10 py-24 px-4 bg-gradient-to-b from-[#fdf8f5] via-rose-50/50 to-amber-50/40">
+        <div class="max-w-4xl mx-auto">
+            <!-- Encabezado de Sección -->
+            <div class="text-center max-w-2xl mx-auto mb-12">
+                <span class="text-xs font-semibold uppercase tracking-widest text-amber-800 bg-amber-100/90 px-3 py-1 rounded-full">Sección II • Nuestro Mayor Tesoro</span>
+                <h2 class="font-serif-elegant text-3xl sm:text-5xl font-bold text-stone-800 mt-3 mb-3">
+                    El Cofre de Nuestro Amor
+                </h2>
+                <p class="text-stone-600 text-sm sm:text-base">
+                    Dentro de este cofre guardé palabras que nacen desde lo más profundo de mi corazón para celebrar nuestros <strong>19 meses juntos</strong>.
+                </p>
+            </div>
+
+            <!-- Escenario del Cofre Interactivo -->
+            <div class="flex flex-col items-center justify-center">
+                <div id="chest-interactive-wrapper" onclick="toggleChest()" class="relative cursor-pointer group select-none max-w-md w-full flex flex-col items-center">
+                    
+                    <!-- Contenedor de explosión de flores y destellos -->
+                    <div id="chest-burst-container" class="absolute inset-0 pointer-events-none z-20 flex items-center justify-center"></div>
+
+                    <!-- Halo de luz mágica detrás del cofre -->
+                    <div class="w-60 h-60 sm:w-72 sm:h-72 rounded-full bg-amber-300/25 blur-3xl absolute top-6 transition-all duration-700 group-hover:bg-amber-300/40 group-hover:scale-110"></div>
+
+                    <!-- Ilustración SVG del Cofre con Cama de Flores -->
+                    <svg id="chest-svg" viewBox="0 0 400 320" class="w-72 sm:w-80 h-auto relative z-10 drop-shadow-xl transition-transform duration-300 group-hover:scale-[1.03]">
+                        <defs>
+                            <linearGradient id="woodBody" x1="0%" y1="0%" x2="0%" y2="100%">
+                                <stop offset="0%" stop-color="#8c532b" />
+                                <stop offset="50%" stop-color="#6b3c1b" />
+                                <stop offset="100%" stop-color="#47260f" />
+                            </linearGradient>
+                            <linearGradient id="woodLid" x1="0%" y1="0%" x2="0%" y2="100%">
+                                <stop offset="0%" stop-color="#a8683b" />
+                                <stop offset="100%" stop-color="#6b3c1b" />
+                            </linearGradient>
+                            <linearGradient id="goldTrim" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#fceabb" />
+                                <stop offset="45%" stop-color="#f8b500" />
+                                <stop offset="100%" stop-color="#b57c00" />
+                            </linearGradient>
+                            <radialGradient id="magicGlow" cx="50%" cy="50%" r="50%">
+                                <stop offset="0%" stop-color="#fffbeb" stop-opacity="1" />
+                                <stop offset="50%" stop-color="#fde68a" stop-opacity="0.7" />
+                                <stop offset="100%" stop-color="#f43f5e" stop-opacity="0" />
+                            </radialGradient>
+                        </defs>
+
+                        <!-- Sombra base -->
+                        <ellipse cx="200" cy="275" rx="145" ry="20" fill="#4a3531" opacity="0.22" />
+
+                        <!-- Resplandor interno cuando el cofre se abre -->
+                        <ellipse id="chest-glow" cx="200" cy="145" rx="115" ry="65" fill="url(#magicGlow)" />
+
+                        <!-- Asomo de flores y carta dentro del cofre abierto -->
+                        <g id="chest-inside-treasure" opacity="0" class="transition-opacity duration-700">
+                            <!-- Rollito de carta asomando -->
+                            <rect x="155" y="110" width="90" height="45" rx="6" fill="#fffdf7" stroke="#d4a359" stroke-width="2" transform="rotate(-6 200 130)" />
+                            <path d="M 185 125 L 215 120" stroke="#e11d48" stroke-width="2" stroke-linecap="round" />
+                            <!-- Flores internas -->
+                            <circle cx="140" cy="135" r="14" fill="#fb7185" />
+                            <circle cx="140" cy="135" r="6" fill="#fef08a" />
+                            <circle cx="260" cy="135" r="14" fill="#f43f5e" />
+                            <circle cx="260" cy="135" r="6" fill="#fef08a" />
+                        </g>
+
+                        <!-- TAPA DEL COFRE (Animada al abrir) -->
+                        <g id="chest-lid">
+                            <!-- Domo de madera superior -->
+                            <path d="M 85 145 C 85 75, 315 75, 315 145 Z" fill="url(#woodLid)" stroke="#3d210e" stroke-width="3" />
+                            <!-- Bandas doradas de la tapa -->
+                            <path d="M 130 145 C 130 92, 148 92, 148 145 Z" fill="url(#goldTrim)" />
+                            <path d="M 252 145 C 252 92, 270 92, 270 145 Z" fill="url(#goldTrim)" />
+                            <!-- Borde dorado inferior de la tapa -->
+                            <rect x="80" y="138" width="240" height="10" rx="4" fill="url(#goldTrim)" stroke="#784f00" stroke-width="1.5" />
+                        </g>
+
+                        <!-- BASE / CUERPO DEL COFRE -->
+                        <g id="chest-base">
+                            <rect x="85" y="145" width="230" height="115" rx="10" fill="url(#woodBody)" stroke="#3d210e" stroke-width="3" />
+                            <!-- Líneas de tablones de madera -->
+                            <line x1="90" y1="183" x2="310" y2="183" stroke="#3d210e" stroke-width="2" opacity="0.5" />
+                            <line x1="90" y1="220" x2="310" y2="220" stroke="#3d210e" stroke-width="2" opacity="0.5" />
+
+                            <!-- Bandas doradas verticales -->
+                            <rect x="130" y="145" width="18" height="115" fill="url(#goldTrim)" stroke="#855800" stroke-width="1" />
+                            <rect x="252" y="145" width="18" height="115" fill="url(#goldTrim)" stroke="#855800" stroke-width="1" />
+
+                            <!-- Refuerzos dorados en las esquinas inferiores -->
+                            <rect x="82" y="245" width="236" height="16" rx="5" fill="url(#goldTrim)" stroke="#784f00" stroke-width="1.5" />
+
+                            <!-- Escudo / Cerradura Central en forma de Corazón Dorado -->
+                            <path d="M 200 185 C 180 185, 172 155, 172 142 L 228 142 C 228 155, 220 185, 200 185 Z" fill="url(#goldTrim)" stroke="#784f00" stroke-width="2" />
+                            <!-- Corazón en la cerradura -->
+                            <path d="M200 156 C200 154, 195 150, 192 154 C189 157, 193 163, 200 168 C207 163, 211 157, 208 154 C205 150, 200 154, 200 156 Z" fill="#be123c" />
+                        </g>
+
+                        <!-- Cama de Flores y Hojas alrededor de la base del cofre -->
+                        <g id="chest-flower-bed">
+                            <!-- Hojas verdes -->
+                            <ellipse cx="75" cy="260" rx="22" ry="10" fill="#40916c" transform="rotate(-25 75 260)" />
+                            <ellipse cx="325" cy="260" rx="22" ry="10" fill="#40916c" transform="rotate(25 325 260)" />
+                            <ellipse cx="115" cy="272" rx="18" ry="8" fill="#2d6a4f" transform="rotate(10 115 272)" />
+                            <ellipse cx="285" cy="272" rx="18" ry="8" fill="#2d6a4f" transform="rotate(-10 285 272)" />
+                            <!-- Flores izquierda -->
+                            <circle cx="88" cy="262" r="14" fill="#f43f5e" />
+                            <circle cx="88" cy="262" r="5" fill="#fde047" />
+                            <circle cx="112" cy="268" r="10" fill="#fb7185" />
+                            <circle cx="112" cy="268" r="4" fill="#fff" />
+                            <!-- Flores derecha -->
+                            <circle cx="312" cy="262" r="14" fill="#f43f5e" />
+                            <circle cx="312" cy="262" r="5" fill="#fde047" />
+                            <circle cx="288" cy="268" r="10" fill="#fda4af" />
+                            <circle cx="288" cy="268" r="4" fill="#fff" />
+                        </g>
+                    </svg>
+
+                    <!-- Botón / Indicador debajo del cofre -->
+                    <div id="chest-prompt-badge" class="mt-2 px-6 py-2.5 rounded-full bg-white border border-amber-300 shadow-md text-stone-700 text-sm font-medium flex items-center gap-2 group-hover:bg-amber-50 group-hover:border-amber-400 transition-all">
+                        <span class="text-lg">🗝️</span>
+                        <span id="chest-prompt-text">Haz clic en el cofre para descubrir tu carta</span>
+                    </div>
+                </div>
+
+                <!-- ==========================================
+                     LA CARTA DE AMOR CON FLORES (Desplegable)
+                =========================================== -->
+                <div id="love-letter-wrapper" class="w-full max-w-2xl mt-10 hidden opacity-0 translate-y-8 transition-all duration-700 ease-out">
+                    <div class="parchment-card relative rounded-3xl p-6 sm:p-12 md:p-14 border border-amber-200/90 overflow-hidden">
+                        
+                        <!-- Adorno Floral Esquina Superior Izquierda (SVG) -->
+                        <svg class="w-24 h-24 sm:w-32 sm:h-32 absolute top-0 left-0 pointer-events-none opacity-90" viewBox="0 0 120 120">
+                            <path d="M 10 95 Q 15 35 85 15" fill="none" stroke="#52b788" stroke-width="3" stroke-linecap="round"/>
+                            <ellipse cx="45" cy="25" rx="12" ry="6" fill="#74c69d" transform="rotate(-30 45 25)"/>
+                            <ellipse cx="25" cy="55" rx="12" ry="6" fill="#52b788" transform="rotate(-65 25 55)"/>
+                            <!-- Rosa principal -->
+                            <circle cx="32" cy="32" r="16" fill="#e11d48"/>
+                            <path d="M 24 30 Q 32 20 40 30 Q 32 42 24 30 Z" fill="#fda4af"/>
+                            <circle cx="32" cy="32" r="5" fill="#fecdd3"/>
+                            <!-- Botones florales -->
+                            <circle cx="65" cy="20" r="8" fill="#fb7185"/>
+                            <circle cx="20" cy="70" r="8" fill="#fda4af"/>
+                        </svg>
+
+                        <!-- Adorno Floral Esquina Superior Derecha (SVG) -->
+                        <svg class="w-24 h-24 sm:w-32 sm:h-32 absolute top-0 right-0 pointer-events-none opacity-90 transform scale-x-[-1]" viewBox="0 0 120 120">
+                            <path d="M 10 95 Q 15 35 85 15" fill="none" stroke="#52b788" stroke-width="3" stroke-linecap="round"/>
+                            <ellipse cx="45" cy="25" rx="12" ry="6" fill="#74c69d" transform="rotate(-30 45 25)"/>
+                            <ellipse cx="25" cy="55" rx="12" ry="6" fill="#52b788" transform="rotate(-65 25 55)"/>
+                            <circle cx="32" cy="32" r="16" fill="#e11d48"/>
+                            <path d="M 24 30 Q 32 20 40 30 Q 32 42 24 30 Z" fill="#fda4af"/>
+                            <circle cx="32" cy="32" r="5" fill="#fecdd3"/>
+                            <circle cx="65" cy="20" r="8" fill="#fb7185"/>
+                            <circle cx="20" cy="70" r="8" fill="#fda4af"/>
+                        </svg>
+
+                        <!-- Adorno Floral Esquina Inferior Izquierda (SVG) -->
+                        <svg class="w-20 h-20 sm:w-28 sm:h-28 absolute bottom-0 left-0 pointer-events-none opacity-80 transform scale-y-[-1]" viewBox="0 0 120 120">
+                            <path d="M 10 95 Q 15 35 85 15" fill="none" stroke="#52b788" stroke-width="3" stroke-linecap="round"/>
+                            <circle cx="32" cy="32" r="14" fill="#f43f5e"/>
+                            <circle cx="32" cy="32" r="5" fill="#fde047"/>
+                            <circle cx="62" cy="22" r="7" fill="#fda4af"/>
+                        </svg>
+
+                        <!-- Adorno Floral Esquina Inferior Derecha (SVG) -->
+                        <svg class="w-20 h-20 sm:w-28 sm:h-28 absolute bottom-0 right-0 pointer-events-none opacity-80 transform scale-[-1]" viewBox="0 0 120 120">
+                            <path d="M 10 95 Q 15 35 85 15" fill="none" stroke="#52b788" stroke-width="3" stroke-linecap="round"/>
+                            <circle cx="32" cy="32" r="14" fill="#f43f5e"/>
+                            <circle cx="32" cy="32" r="5" fill="#fde047"/>
+                            <circle cx="62" cy="22" r="7" fill="#fda4af"/>
+                        </svg>
+
+                        <!-- Contenido Interior de la Carta -->
+                        <div class="relative z-10 text-center pt-4 pb-2 border-b border-amber-200/70 mb-6">
+                            <span class="text-xs uppercase tracking-widest text-rose-600 font-semibold block mb-1">Carta de Aniversario</span>
+                            <h3 id="letter-header-title" class="font-romantic text-4xl sm:text-5xl text-stone-800">
+                                Felices 1 Año y 7 Meses, mi amor
+                            </h3>
+                            <p id="letter-date" class="text-xs text-stone-400 mt-1 italic"></p>
+                        </div>
+
+                        <!-- Cuerpo de la carta inyectado desde CONFIG -->
+                        <div id="letter-body-content" class="relative z-10 space-y-4 text-stone-700 text-base sm:text-lg leading-relaxed font-serif-elegant">
+                            <!-- Se llena dinámicamente con JS -->
+                        </div>
+
+                        <!-- Firma de la carta -->
+                        <div class="relative z-10 mt-10 pt-6 border-t border-amber-200/60 flex flex-col items-end text-right">
+                            <p class="text-xs uppercase tracking-widest text-stone-400 mb-1">Con todo mi corazón,</p>
+                            <p id="letter-signature" class="font-romantic text-3xl sm:text-4xl text-rose-600">
+                                Tu persona favorita ♥
+                            </p>
+                        </div>
+
+                        <!-- Sello de cera decorativo al centro inferior -->
+                        <div class="mt-8 flex flex-col sm:flex-row items-center justify-between gap-4 pt-4">
+                            <div class="inline-flex items-center gap-2 text-xs text-stone-500">
+                                <span class="w-7 h-7 rounded-full bg-rose-700 text-amber-200 flex items-center justify-center font-serif-elegant font-bold shadow-inner">19M</span>
+                                <span>Sellado con amor eterno</span>
+                            </div>
+                            <button onclick="toggleChest()" class="px-5 py-2 rounded-full bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 text-xs font-medium transition-colors">
+                                Guardar carta en el cofre ↑
+                            </button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================
+         PIE DE PÁGINA
+    =========================================== -->
+    <footer class="relative z-10 py-10 text-center border-t border-rose-200/50 bg-white/60 text-stone-500 text-xs sm:text-sm px-4">
+        <p class="font-serif-elegant italic text-stone-700 text-base mb-1">"1 año y 7 meses construyendo el lugar más bonito del mundo: nosotros."</p>
+        <p>Hecho con ♥ para celebrar nuestra historia</p>
+    </footer>
+
+    <!-- ==========================================
+         MODAL INTERACTIVO PARA FOTOS DEL ÁRBOL
+    =========================================== -->
+    <div id="photo-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-stone-900/60 backdrop-blur-sm opacity-0 transition-opacity duration-300" onclick="closePhotoModal(event)">
+        <div id="photo-modal-card" class="bg-[#fffdf9] rounded-3xl max-w-md w-full p-5 sm:p-6 shadow-2xl border border-rose-200 transform scale-90 transition-transform duration-300 relative" onclick="event.stopPropagation()">
+            
+            <!-- Botón Cerrar -->
+            <button onclick="closePhotoModal()" class="absolute -top-3 -right-3 w-9 h-9 rounded-full bg-white text-stone-700 hover:text-rose-600 shadow-md border border-stone-200 flex items-center justify-center font-bold text-lg transition-transform hover:scale-110" aria-label="Cerrar recuerdo">
+                ✕
+            </button>
+
+            <!-- Marco estilo Polaroid -->
+            <div class="bg-white p-3 pb-5 rounded-2xl shadow-md border border-stone-100 mb-5">
+                <div class="relative aspect-[4/3] w-full rounded-xl overflow-hidden bg-rose-50 mb-3">
+                    <img id="modal-img" src="" alt="Recuerdo de nosotros" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/600x450/f4dce0/be4d66?text=Nuestra+Foto+Especial'">
+                    <div id="modal-tag" class="absolute top-3 left-3 bg-black/55 backdrop-blur-md text-white text-[11px] px-3 py-1 rounded-full font-medium">
+                        Recuerdo #1
+                    </div>
+                </div>
+                <h4 id="modal-title" class="font-romantic text-2xl sm:text-3xl text-center text-stone-800">
+                    Título del Recuerdo
+                </h4>
+                <p id="modal-date" class="text-center text-xs text-rose-500 font-medium mt-0.5">
+                    Fecha especial
+                </p>
+            </div>
+
+            <!-- Mensaje corto de amor -->
+            <div class="bg-rose-50/70 border border-rose-100 rounded-2xl p-4 text-center">
+                <p id="modal-message" class="text-stone-700 text-sm sm:text-base italic leading-relaxed font-serif-elegant">
+                    "Mensaje de amor..."
+                </p>
+            </div>
+
+            <!-- Navegación entre recuerdos dentro del modal -->
+            <div class="flex items-center justify-between mt-5 pt-2 text-xs font-medium text-stone-500">
+                <button onclick="navigateModal(-1)" class="px-3 py-1.5 rounded-full hover:bg-stone-100 transition-colors flex items-center gap-1">
+                    <span>←</span> <span>Anterior</span>
+                </button>
+                <span class="text-rose-400">♥</span>
+                <button onclick="navigateModal(1)" class="px-3 py-1.5 rounded-full hover:bg-stone-100 transition-colors flex items-center gap-1">
+                    <span>Siguiente</span> <span>→</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==========================================
+         JAVASCRIPT Y CONFIGURACIÓN PERSONALIZABLE
+    =========================================== -->
+    <script>
+        /* =========================================================================
+           🛠️ CONFIGURACIÓN RÁPIDA PARA EL CLIENTE (EDITA AQUÍ FOTOS Y TEXTOS)
+           Puedes usar rutas locales en tu repositorio (ej. "img/foto1.jpg")
+           o enlaces directos de internet.
+        ========================================================================= */
+        const CONFIG = {
+            // Nombres de la pareja
+            coupleNames: "Majo & Lalo",
+            
+            // Subtítulo en la portada
+            heroSubtitle: "1 año y 7 meses contigo mi vida, compartiendo momentos inolvidables, risas y bromas. Pero sobre todo crecimiento, haciendo la relación más fuerte día con día.",
+
+            // =====================================================================
+            // 🍎 7 FOTOS Y MENSAJES COLGANTES EN EL ÁRBOL DE RECUERDOS
+            // Coordenadas (x, y) en porcentaje dentro de la copa del árbol
+            // =====================================================================
+            treeMemories: [
+                {
+                    id: 1,
+                    title: "La captura de nuestro amor",
+                    date: "Nuestra primera foto juntos",
+                    // Reemplaza la URL por tu foto: ej. "./fotos/foto1.jpg"
+                    image: "img/image1.jpg",
+                    message: "Desde el primer día supe que tenías algo unico y especial",
+                    x: 34, y: 24, delay: "1.6s"
+                },
+                {
+                    id: 2,
+                    title: "La luz de mi caminio",
+                    date: "El color blanco en el amor, puede representar lo puro e inocente, así como la limpieza, la paz y la virtud.",
+                    image: "img/image2.jpg",
+                    message: "Me siento privilegiado, que en esos días de incertidumbre tu seas la luz limpia, haciendo que encuentre la paz contigo.",
+                    x: 50, y: 17, delay: "1.75s"
+                },
+                {
+                    id: 3,
+                    title: "Mi persona favorita",
+                    date: "'Mi persona favorita, tiene la cara bonita'",
+                    image: "img/image3.jpg",
+                    message: "Tener la dicha de poder apreciar tu cara, es el mayor regalo que tu me has dado",
+                    x: 66, y: 24, delay: "1.9s"
+                },
+                {
+                    id: 4,
+                    title: "Mi película favorita",
+                    date: "Las mejores salidas de cines son contigo",
+                    image: "img/image4.jpg",
+                    message: "Eres mi película que jamas me voy a cansar de producir, en donde cada estreno está en mi corazón.",
+                    x: 23, y: 39, delay: "2.05s"
+                },
+                {
+                    id: 5,
+                    title: "Cómplices en todo",
+                    date: "Miradas que hablan",
+                    image: "img/image5.jpg",
+                    message: "Me encanta cómo nos entendemos con una sola mirada y cómo hacemos especial hasta el plan más sencillo.",
+                    x: 43, y: 36, delay: "2.2s"
+                },
+                {
+                    id: 6,
+                    title: "Tus dulces besos",
+                    date: "Esos besos marcados por tu gloss, que jamaras me quitare",
+                    image: "img/image6.jpg",
+                    message: "En cada beso tuyo siento ese vinculo que nos une, siento el amor que fluye entre nosotros dos. Tus besos son magicos para mi.",
+                    x: 59, y: 38, delay: "2.35s"
+                },
+                {
+                    id: 7,
+                    title: "Momentos de amor en el carro",
+                    date: "Una de mis partes favorita de nuestras citas",
+                    image: "img/image7.jpg",
+                    message: "Esos momentos en el carro son inolvidable, ahí nos reímos, nos disculpamos, nos conocemos. Se siente un espacio tan unico contigo.",
+                    x: 77, y: 40, delay: "2.5s"
+                }
+            ],
+
+            // =====================================================================
+            // 💌 CARTA DE AMOR DETALLADA DENTRO DEL COFRE
+            // Cada elemento del arreglo es un párrafo de la carta
+            // =====================================================================
+            loveLetter: {
+                title: "Felices 1 Año y 7 Meses, mi amor",
+                dateSubtitle: "19 meses escribiendo nuestra historia",
+                paragraphs: [
+                    "Solo quiero decirte en esta carta lo fabulosa, grandiosa, hermosa e inteligente que eres tu mi amor.",
+                    "Agradezco a dios que te pude concer, desde que llegaste a mi vida cambio para bien, te convertiste en mi inspiración y en mi motivación.",
+                    "El amor que te tengo es enorme, te volvismte mi confidente y cada día me sorpendes de lo talentosa que eres, el como sobrellevas las situaciones complicadas. Eres fuerte siempre recuerdalo, y no estaras nunca sola siempre me tendras a mi para cualquier cosa. Gracias por tus enseñanzas de vida, de compartir tu corazón conmingo.",
+                    "Gracias Majo por todo, mi corazón es tuyo, eres tú con quien yo quiero seguir creciendo, aprendiendo, eres tu para mi vida. Por eso siempre te voy a proteger y amar amor de mi vida"
+                ],
+                signature: "Con todo mi amor, siempre tuyo ♥"
+            }
+        };
+
+        /* =========================================================================
+           LÓGICA DE LA APLICACIÓN INTERACTIVA
+        ========================================================================= */
+        let currentModalIndex = 0;
+        let isTreeGrown = false;
+        let isChestOpen = false;
+
+        // Inicialización al cargar la página
+        window.addEventListener('DOMContentLoaded', () => {
+            applyCustomConfig();
+            renderHangingPhotos();
+            createAmbientPetals();
+
+            // Hacer crecer el árbol automáticamente cuando el usuario baje a la sección
+            const treeSection = document.getElementById('seccion-arbol');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting && !isTreeGrown) {
+                        setTimeout(() => growTree(), 350);
+                    }
+                });
+            }, { threshold: 0.35 });
+
+            observer.observe(treeSection);
+        });
+
+        // 1. Inyectar textos personalizados desde CONFIG
+        function applyCustomConfig() {
+            document.getElementById('nav-couple-names').textContent = CONFIG.coupleNames;
+            document.getElementById('hero-couple-names').textContent = CONFIG.coupleNames;
+            document.getElementById('hero-subtitle').textContent = CONFIG.heroSubtitle;
+
+            // Textos de la carta
+            document.getElementById('letter-header-title').textContent = CONFIG.loveLetter.title;
+            document.getElementById('letter-date').textContent = CONFIG.loveLetter.dateSubtitle;
+            document.getElementById('letter-signature').textContent = CONFIG.loveLetter.signature;
+
+            const letterBody = document.getElementById('letter-body-content');
+            letterBody.innerHTML = CONFIG.loveLetter.paragraphs
+                .map(p => `<p class="leading-relaxed">${p}</p>`)
+                .join('');
+        }
+
+        // 2. Renderizar las 7 fotos colgantes (Manzanas / Polaroids) en el árbol
+        function renderHangingPhotos() {
+            const container = document.getElementById('hanging-photos-container');
+            container.innerHTML = '';
+
+            CONFIG.treeMemories.forEach((memory, index) => {
+                const charm = document.createElement('div');
+                charm.className = 'hanging-charm-wrapper absolute -translate-x-1/2';
+                charm.style.left = `${memory.x}%`;
+                charm.style.top = `${memory.y}%`;
+                charm.style.transitionDelay = memory.delay;
+
+                // Desfase aleatorio para que no se balanceen todas al mismo ritmo
+                const swingDelay = (index * 0.45).toFixed(2);
+
+                charm.innerHTML = `
+                    <div class="charm-swing flex flex-col items-center cursor-pointer group" style="animation-delay: -${swingDelay}s;" onclick="openPhotoModal(${index})">
+                        <!-- Hilo dorado que cuelga de la rama -->
+                        <div class="w-0.5 h-6 sm:h-8 bg-amber-300/90 shadow-sm"></div>
+                        
+                        <!-- Hoja superior de la manzana/medallón -->
+                        <div class="relative -mb-1.5 z-10 flex items-center">
+                            <span class="w-3 h-2 bg-emerald-500 rounded-full rotate-[-25deg] block border border-emerald-700/30"></span>
+                            <span class="w-2 h-2 rounded-full bg-amber-400 border border-white -ml-1"></span>
+                        </div>
+
+                        <!-- Medallón Manzana / Polaroid con Foto -->
+                        <div class="relative w-12 h-12 sm:w-16 sm:h-16 rounded-full p-1 bg-gradient-to-b from-rose-500 to-rose-700 shadow-lg shadow-rose-950/30 border-2 border-amber-200 group-hover:scale-125 group-hover:border-white transition-all duration-300 overflow-hidden">
+                            <img src="${memory.image}" alt="${memory.title}" class="w-full h-full object-cover rounded-full" onerror="this.src='https://placehold.co/150x150/f4dce0/be4d66?text=♥'">
+                            <!-- Brillo de manzana -->
+                            <div class="absolute inset-0 bg-gradient-to-tr from-transparent via-white/10 to-white/35 pointer-events-none rounded-full"></div>
+                        </div>
+
+                        <!-- Etiqueta flotante con número/mes -->
+                        <span class="mt-1 px-2 py-0.5 rounded-full bg-white/95 text-rose-700 font-semibold text-[10px] sm:text-xs shadow-sm border border-rose-200 group-hover:bg-rose-600 group-hover:text-white transition-colors whitespace-nowrap">
+                            ♥ ${index + 1}
+                        </span>
+                    </div>
+                `;
+
+                container.appendChild(charm);
+            });
+        }
+
+        // 3. Animación de crecimiento del árbol
+        function growTree() {
+            const stage = document.getElementById('tree-stage');
+            const btnGrowText = document.getElementById('btn-grow-text');
+            const btnReplay = document.getElementById('btn-replay-tree');
+
+            stage.classList.add('tree-grown');
+            isTreeGrown = true;
+
+            btnGrowText.textContent = "Árbol Florecido con Amor";
+            btnReplay.classList.remove('hidden');
+        }
+
+        function resetAndGrowTree() {
+            const stage = document.getElementById('tree-stage');
+            stage.classList.remove('tree-grown');
+            isTreeGrown = false;
+
+            setTimeout(() => {
+                growTree();
+            }, 400);
+        }
+
+        // 4. Funciones del Modal de Fotos
+        function openPhotoModal(index) {
+            currentModalIndex = index;
+            updateModalContent();
+
+            const modal = document.getElementById('photo-modal');
+            const card = document.getElementById('photo-modal-card');
+
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+
+            requestAnimationFrame(() => {
+                modal.classList.remove('opacity-0');
+                card.classList.remove('scale-90');
+                card.classList.add('scale-100');
+            });
+        }
+
+        function updateModalContent() {
+            const item = CONFIG.treeMemories[currentModalIndex];
+            document.getElementById('modal-img').src = item.image;
+            document.getElementById('modal-tag').textContent = `Recuerdo ${currentModalIndex + 1} de ${CONFIG.treeMemories.length}`;
+            document.getElementById('modal-title').textContent = item.title;
+            document.getElementById('modal-date').textContent = item.date;
+            document.getElementById('modal-message').textContent = `"${item.message}"`;
+        }
+
+        function navigateModal(direction) {
+            const total = CONFIG.treeMemories.length;
+            currentModalIndex = (currentModalIndex + direction + total) % total;
+            updateModalContent();
+        }
+
+        function closePhotoModal(event) {
+            const modal = document.getElementById('photo-modal');
+            const card = document.getElementById('photo-modal-card');
+
+            modal.classList.add('opacity-0');
+            card.classList.remove('scale-100');
+            card.classList.add('scale-90');
+
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+            }, 280);
+        }
+
+        // Cerrar modal con tecla Escape o navegar con flechas
+        window.addEventListener('keydown', (e) => {
+            const modal = document.getElementById('photo-modal');
+            if (modal.classList.contains('hidden')) return;
+            if (e.key === 'Escape') closePhotoModal();
+            if (e.key === 'ArrowRight') navigateModal(1);
+            if (e.key === 'ArrowLeft') navigateModal(-1);
+        });
+
+        // 5. Interacción del Cofre y Despliegue de la Carta con Flores
+        function toggleChest() {
+            const chestWrapper = document.getElementById('chest-interactive-wrapper');
+            const chestSvg = document.getElementById('chest-svg');
+            const insideTreasure = document.getElementById('chest-inside-treasure');
+            const promptText = document.getElementById('chest-prompt-text');
+            const letterWrapper = document.getElementById('love-letter-wrapper');
+
+            if (!isChestOpen) {
+                isChestOpen = true;
+                // Sacudida de emoción antes de abrir
+                chestSvg.classList.add('chest-shaking');
+
+                setTimeout(() => {
+                    chestSvg.classList.remove('chest-shaking');
+                    chestWrapper.classList.add('chest-open');
+                    insideTreasure.setAttribute('opacity', '1');
+                    promptText.textContent = "Cofre abierto • Haz clic para cerrarlo";
+
+                    // Lanzar explosión de flores y corazones desde el cofre
+                    triggerFlowerBurst();
+
+                    // Mostrar carta de amor
+                    letterWrapper.classList.remove('hidden');
+                    requestAnimationFrame(() => {
+                        letterWrapper.classList.remove('opacity-0', 'translate-y-8');
+                        letterWrapper.classList.add('opacity-100', 'translate-y-0');
+                    });
+
+                    // Desplazar suavemente hacia la carta
+                    setTimeout(() => {
+                        letterWrapper.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                    }, 350);
+                }, 450);
+
+            } else {
+                isChestOpen = false;
+                chestWrapper.classList.remove('chest-open');
+                insideTreasure.setAttribute('opacity', '0');
+                promptText.textContent = "Haz clic en el cofre para descubrir tu carta";
+
+                letterWrapper.classList.remove('opacity-100', 'translate-y-0');
+                letterWrapper.classList.add('opacity-0', 'translate-y-8');
+
+                setTimeout(() => {
+                    letterWrapper.classList.add('hidden');
+                }, 600);
+            }
+        }
+
+        // Explosión de flores al abrir el cofre
+        function triggerFlowerBurst() {
+            const container = document.getElementById('chest-burst-container');
+            container.innerHTML = '';
+            const icons = ['🌸', '🌹', '🌺', '✨', '💖', '🌷', '🦋', '🌼'];
+
+            for (let i = 0; i < 22; i++) {
+                const span = document.createElement('span');
+                span.className = 'burst-particle text-xl sm:text-2xl';
+                span.textContent = icons[i % icons.length];
+
+                const angle = (Math.PI * 2 * i) / 22;
+                const distance = 90 + Math.random() * 110;
+                const tx = Math.cos(angle) * distance;
+                const ty = Math.sin(angle) * distance - 60;
+                const rot = (Math.random() * 360 - 180) + 'deg';
+
+                span.style.setProperty('--tx', `${tx}px`);
+                span.style.setProperty('--ty', `${ty}px`);
+                span.style.setProperty('--rot', rot);
+
+                container.appendChild(span);
+            }
+        }
+
+        // 6. Crear pétalos suaves flotando en el fondo
+        function createAmbientPetals() {
+            const container = document.getElementById('ambient-particles');
+            const symbols = ['🌸', '💮', '✨', '♥'];
+
+            for (let i = 0; i < 14; i++) {
+                const petal = document.createElement('div');
+                petal.className = 'bg-petal text-rose-300/60 select-none';
+                petal.textContent = symbols[i % symbols.length];
+                petal.style.left = `${Math.random() * 100}vw`;
+                petal.style.fontSize = `${10 + Math.random() * 12}px`;
+                petal.style.animationDuration = `${14 + Math.random() * 16}s`;
+                petal.style.animationDelay = `-${Math.random() * 20}s`;
+                container.appendChild(petal);
+            }
+        }
+    </script>
+</body>
+</html>
